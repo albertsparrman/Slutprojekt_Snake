@@ -89,10 +89,6 @@ public class Controller {
         northpanel.addNewGameButoonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                javax.swing.JLabel label = new javax.swing.JLabel("New Game");
-                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-                JOptionPane.showMessageDialog(null, label,"Are you sure?", JOptionPane.INFORMATION_MESSAGE);
-
                 snakeGameModel.setReset(true);
                 snakeGameModel.NextStep();
                 southpanel.setScoreLabel(snakeGameModel.getCurrentScore());

@@ -43,6 +43,7 @@ class GameFrame extends JFrame {
         southGamePanel = new SouthGamePanel();
         add(southGamePanel, BorderLayout.SOUTH);
 
+
         snakeController = new Controller(snakeModel, snakeGameView, northGamePanel, southGamePanel);
 
 

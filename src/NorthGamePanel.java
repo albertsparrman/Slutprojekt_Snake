@@ -13,12 +13,12 @@ class NorthGamePanel extends JPanel{
 
         play = new JButton("Play");
         play.setBackground(Color.WHITE);
-        play.setPreferredSize(new Dimension(100, 30));
+        play.setPreferredSize(new Dimension(150, 30));
         add(play);
 
-        newGame = new JButton("New Game");
+        newGame = new JButton("Set Highscore");
         newGame.setBackground(Color.WHITE);
-        newGame.setPreferredSize(new Dimension(100, 30));
+        newGame.setPreferredSize(new Dimension(150, 30));
         add(newGame);
 
     }

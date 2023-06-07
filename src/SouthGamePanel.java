@@ -5,6 +5,7 @@ class SouthGamePanel extends JPanel {
 
         private final JLabel scorelabel;
         private final JLabel lives;
+        private final String highscores;
 
         public SouthGamePanel() {
                 setBackground(Color.WHITE);
@@ -24,6 +25,8 @@ class SouthGamePanel extends JPanel {
                 lives.setPreferredSize(new Dimension(100, 30));
                 add(lives);
 
+                highscores = new databaseConnector().getDatabaseContent();
+                System.out.println(highscores);
         }
 
         public void setScoreLabel(int score){

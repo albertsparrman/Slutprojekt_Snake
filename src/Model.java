@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,6 +23,7 @@ class Model {
     private Arrow previousArrow = Arrow.LEFT;
     //boolean to see if user wants to reset game
     private boolean reset = false;
+    private String HighscoreName;
 
     public Model(){
         for (Cell[] cellgrid1 : cellgrid) {
@@ -53,10 +55,8 @@ class Model {
         this.fruitPosition = new Point(x, y);
     }
 
-    //remove Fruit from the grid
+
     public void removeFruit(){
-        //technically supposed to be eaqual to null but that won't work in my code
-        //assigned negative coordinates
         this.fruitPosition = new Point(-1, -1);
     }
 
@@ -64,12 +64,10 @@ class Model {
         this.snakeParts = SnakeCordinates.size();
     }
 
-    //add new snakePart, x and y are the cordinates of the new part
     public void addNewSnakePart(int x, int y){
         this.SnakeCordinates.add(new Point(x, y));
     }
 
-    //alter the coordinates of the snake parts at the necessary index
     public void alterSnakeCordinates(int position, int newX, int newY){
         this.SnakeCordinates.remove(position);
         this.SnakeCordinates.add(position, new Point(newX, newY));
@@ -96,8 +94,6 @@ class Model {
     public int getCurrentLive() {return currentLive; }
 
     public void setArrowKey(String key){
-        //other part of the if check to make sure snake only moves forward and not backward
-
         if (key.toLowerCase().equals("up") && !previousArrow.equals(Arrow.DOWN)) {
             this.currentArrow = Arrow.UP;
         }
@@ -111,7 +107,7 @@ class Model {
             this.currentArrow = Arrow.LEFT;
         }
     }
-    //gets the user input
+
     public String getArrowKey(){
         return this.currentArrow.toString();
     }
@@ -136,7 +132,6 @@ class Model {
     public void setTimeInterval(int time){this.timeinteval = time;}
 
     public void snakeDies(){
-        //lives is decremeted and snakecordinates are reset to intial
         decrementLive();
         this.snakeParts = 0;
         SnakeCordinates.removeAll(SnakeCordinates);
@@ -144,9 +139,11 @@ class Model {
         this.currentArrow = Arrow.RIGHT;
     }
 
-    //reseting all the variables
+
     public void ResetGame(){
         snakeDies();
+        HighscoreName = JOptionPane.showInputDialog("Username for highscore list");
+        new databaseConnector().insertNewScore(HighscoreName, currentScore);
         setScore(0);
         setLive(3);
         removeFruit();
@@ -174,20 +171,20 @@ class Model {
             }
             else{updateSnakePosition();}
 
-            //if snake eats fruit
+
             if(SnakeCordinates.get(0).x == fruitPosition.x && SnakeCordinates.get(0).y == fruitPosition.y)
             {
                 eat();
             }
 
-            //if snake touches the boundary
+
             if(SnakeCordinates.get(0).x < 0 || SnakeCordinates.get(0).x > TOTAL_GAME_AREA-1 ||SnakeCordinates.get(0).y <0 ||SnakeCordinates.get(0).y > TOTAL_GAME_AREA-1)
             {
                 snakeDies();
                 isPlaying = false;
             }
 
-            //if snake eats itself
+
             for (int i = 1; i < SnakeCordinates.size()-1; i++) {
                 if (SnakeCordinates.get(0).equals(SnakeCordinates.get(i))) {
                     snakeDies();
@@ -235,12 +232,6 @@ class Model {
         }
 
         previousArrow = currentArrow;
-//        System.out.println(snakeParts);
-//        System.out.println(currentArrow.toString());
-//        for (int i = 0; i < SnakeCordinates.size(); i++) {
-//            System.out.println(SnakeCordinates.get(i).x +" "+SnakeCordinates.get(i).y+" ,");
-//        }
-
     }
 
     public void eat(){
@@ -251,7 +242,7 @@ class Model {
     }
 
 }
-//Arrow controls
+
 enum Arrow {
     UP, DOWN, RIGHT, LEFT
 }
